@@ -4,31 +4,31 @@
         class="date"
         v-for="(item, index) in dateList" 
         :key="item.id"
-        
+        :class="item.classArr"
         >
-            <p class="date-day">{{ item.date }}</p>
-            <p class="date-festival">初一</p>
+            <p class="date-day">{{ item.cDay }}</p>
+            <p class="date-festival">{{ item.festival && item.festival.length <= 3 ? item.festival : item.IDayCn }}</p>
         </div>
     </div>
 </template>
 
 <script>
+
 export default {
     name: 'SwiperSlide',
-    data() {
-        return {
-            dateList: []
-        }
+    props: {
+        pageData: Array
     },
     mounted() {
-        var list = [];
-        for (let i = 0; i < 35; i ++) {
-            list.push({
-                id: i,
-                date: i + 1
-            });
+        
+    },
+    data() {
+        return {
+            dateList: this.pageData
         }
-        this.dateList = list;
+    },
+    methods: {
+        
     }
 }
 </script>
@@ -52,20 +52,34 @@ export default {
         justify-content: center;
         border-radius: 50%;
         margin-bottom: 1.5rem;
+        overflow: hidden;
     }
     
-    
-    
-
     .date-day {
         font-size: 1.2rem;
-        color: #333;
-    
         font-family: "AC Big Serif One";
     }
     .date-festival {
-        font-size: .7rem;
-        color: gray;
         margin-top: .4rem;
+        font-size: .7rem;
     }
+
+    .this-month .date-day{
+        color: #333;
+    }
+    .this-month .date-festival {
+        color: gray;
+    }
+    .not-this-month .date-day {
+        color:  #D4D4D4;
+    }
+    .not-this-month .date-festival {
+        color: #E4E4E4;
+    }
+
+    .is-festival .date-festival {
+        color: #0490F1;
+    }
+    
+    
 </style>

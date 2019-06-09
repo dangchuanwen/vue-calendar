@@ -11,30 +11,31 @@ const getTodayClass = function(date) {
     } else {
         date.classArr.push('not-today');
     }
+    return date;
 }
 
-/** 获取是否本月的 className */
-const getNowMonthClass = function(date) {
-    var nowDate = new Date();
-    var nowYear = nowDate.getFullYear();
-    var nowMonth = nowDate.getMonth() + 1;
-
-    if (date.year === nowYear && date.month === nowMonth) {
+/** 获取是否某个页面当月的 className */
+const getNowMonthClass = function(date, year, month) {
+    
+    if (date.cYear === year && date.cMonth === month) {
         date.classArr.push('this-month');
     } else {
         date.classArr.push('not-this-month');
     }
+    
+    return date;
 }
 
 /** 获取是否是节日的 className
  * 
  */
-const getIsFestivalClass = function(date) {
-    if (date.isFestival) {
+const getIsFestivalClass = function(date, year, month) {
+    if (date.festival && date.festival.length < 4 && date.cYear === year && date.cMonth === month) {
         date.classArr.push('is-festival');
     } else {
         date.classArr.push('is-not-festival');
     }
+    return date;
 }
 
 /** 获取是否是节假日休息或者上班的 className
@@ -48,6 +49,7 @@ const getIfVacationClass = function(date) {
     } else {
         date.classArr.push('no-vacation');
     }
+    return date;
 }
 
 
@@ -55,14 +57,16 @@ const getIfVacationClass = function(date) {
 /** 初始化的添加 class
  * 
  */
-const initAddClass = function(date) {
+const initAddClass = function(date, year, month) {
+    date.classArr = [];
     // 本月 or 非本月
-    date = getNowMonthClass(date);
+    date = getNowMonthClass(date, year, month);
     // 节日 or 非节日
-    date = getIsFestivalClass(date);
+    date = getIsFestivalClass(date, year, month);
     // 假日 or 上班 or 无
-    date = getIfVacationClass(date);
+    //date = getIfVacationClass(date);
     // 今日 or 非今日
-    date = getTodayClass(date);
+    //date = getTodayClass(date);
     return date;
 }
+export default initAddClass
