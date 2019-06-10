@@ -5,6 +5,7 @@
         v-for="(item, index) in dateList" 
         :key="item.id"
         :class="item.classArr"
+        @click="chooseDate(item)"
         >
             <p class="date-day">{{ item.cDay }}</p>
             <p class="date-festival">{{ item.festival && item.festival.length <= 3 ? item.festival : item.IDayCn }}</p>
@@ -28,7 +29,9 @@ export default {
         }
     },
     methods: {
-        
+        chooseDate(item) {
+            console.log(item)
+        }
     }
 }
 </script>
@@ -61,7 +64,7 @@ export default {
     }
     .date-festival {
         margin-top: .4rem;
-        font-size: .7rem;
+        font-size: .6rem;
     }
 
     .this-month .date-day{
@@ -80,6 +83,26 @@ export default {
     .is-festival .date-festival {
         color: #0490F1;
     }
+
+    .is-today-is-choose {
+        background: #0490F1;
+    }
+    .is-today-is-choose .date-day{
+        color: white;
+    }
+    .is-today-is-choose .date-festival {
+        color: white;
+    }
+    .is-today-is-not-choose .date-day{
+        color: #0490F1;
+    }
+    .is-not-today-is-choose {
+        border-radius: 50%;
+    }
+    .is-not-today-is-not-choose {
+
+    }
+    
     
     
 </style>

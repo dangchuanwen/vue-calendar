@@ -13,6 +13,8 @@ import DateSurvey from './components/DateSurvey.vue'
 import WeekThead from './components/WeekThead.vue'
 import Calendar from './components/Calendar.vue'
 
+
+
 export default {
     name: 'app',
     components: {

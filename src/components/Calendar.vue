@@ -39,11 +39,25 @@ export default {
                 var year = middle_date.cYear;
                 var month = middle_date.cMonth;
                 data.forEach((e, index, arr) => {
-                    
-                    arr[index] = getClassArr(e, year, month);    
+                    // 判断当前日期是否为今日，初始化 choose_date
+                    var today_date = new Date();
+                    var today = {
+                        year: today_date.getFullYear(),
+                        month: today_date.getMonth() + 1,
+                        day: today_date.getDate()
+                    };
+                    if (e.cYear === year && 
+                        e.cMonth === month && 
+                        today.year === e.cYear &&
+                        today.month === e.cMonth &&
+                        today.day === e.cDay
+                    ) {
+                        this.choose_date = e;   
+                    }
+                    arr[index] = getClassArr(e, year, month, this.choose_date);    
                 });
             });
-     
+           
             return datas;
         },
         initData () {
@@ -68,6 +82,7 @@ export default {
     },
     data() {
         return {
+            choose_date: null,
             dateData: [],
             swiperOption: {
             // some swiper options/callbacks

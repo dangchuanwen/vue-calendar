@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack-dev-server --hot --host 192.168.43.247",
+    "dev": "webpack-dev-server --hot",
     "build": "webpack --mode production --progress --hide-modules"
   },
   "author": "",
@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
+    "fastclick": "^1.0.6",
     "vue": "^2.6.10",
     "vue-awesome-swiper": "^3.1.3"
   }
