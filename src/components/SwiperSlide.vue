@@ -15,6 +15,8 @@
 
 <script>
 
+import eventDispatch from '../util/eventDispatch.js'
+
 export default {
     name: 'SwiperSlide',
     props: {
@@ -30,7 +32,7 @@ export default {
     },
     methods: {
         chooseDate(item) {
-            console.log(item)
+            eventDispatch.chooseDate(item);
         }
     }
 }

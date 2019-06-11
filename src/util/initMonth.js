@@ -36,6 +36,7 @@ function getMonthDayNum(year, month) {
  * @param year 年份
  * @param month 月份 
  * @param start 开始日期，默认为1
+ * @param end 结束日期
  */
 function getMonthDate(year, month, start = 1, end) {
     // 初始化结果为一个数组
@@ -44,11 +45,13 @@ function getMonthDate(year, month, start = 1, end) {
     var month_day_num = end !== undefined ? end : getMonthDayNum(year, month);
    
     for (let i = start; i <= month_day_num; i ++) {
-        res.push(getDateInfo({
+        let date = getDateInfo({
             year: year,
             month: month,
             day: i
-        }));
+        });
+        
+        res.push(date);
     };
     return res;
 }
@@ -112,8 +115,13 @@ var initMonthInfo = {
         var next_month_data = getMonthDate(next_month_year, next_month, 1, next_month_day_num);
       
         // 返回数据为 上个月数据 + 本月数据 + 下个月的数据
-        
-        return [].concat(last_month_data, this_month_data, next_month_data);
+        var res = [].concat(last_month_data, this_month_data, next_month_data);
+        // 添加日期的页面所属年份和月份
+        res.forEach((e) => {
+            e.page_year = year;
+            e.page_month = month;
+        });
+        return res;
     }
 }
 
