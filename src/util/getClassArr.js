@@ -122,25 +122,36 @@ const getIfVacationClass = function(date) {
  */
 const getChooseClass = function(date, choose_date) {
     // 添加响应式
+    var today_date = new Date();
+    var is_today = today_date.getFullYear() === date.page_year &&
+                   today_date.getMonth() + 1 === date.page_month &&
+                   today_date.getDate() === date.cDay;
     dependence(date, 'is_choose', true, function(obj, new_value) {
         obj.classArr = util.arrayRemove(obj.classArr, 'is-today-is-choose');
         obj.classArr = util.arrayRemove(obj.classArr, 'is-today-is-not-choose');
         obj.classArr = util.arrayRemove(obj.classArr, 'is-not-today-is-choose');
         obj.classArr = util.arrayRemove(obj.classArr, 'is-not-today-is-not-choose');
         if (new_value) {
-            if (date === choose_date) {
+            if (is_today) {
                 obj.classArr.push('is-today-is-choose');
             } else {
-                obj.classArr.push('is-today-is-not-choose');
+                obj.classArr.push('is-not-today-is-choose');
             }
         } else {
-            if (date === choose_date) {
-                obj.classArr.push('is-not-today-is-choose');
-            } else {
+           if (is_today) {
+                obj.classArr.push('is-today-is-not-choose');
+           } else {
                 obj.classArr.push('is-not-today-is-not-choose');
-            }
+           }
         }
     });
+    
+    if (date === choose_date) {
+        date.is_choose = true;
+    } else {
+        date.is_choose = false;
+    }
+    return date;
 }
 
 
@@ -161,7 +172,7 @@ const initAddClass = function(date, choose_date) {
     // 今日 or 非今日
     date = getTodayClass(date, choose_date);
     // 选中 or 未选中
-    
+    date = getChooseClass(date, choose_date);
     return date;
 }
 export default initAddClass

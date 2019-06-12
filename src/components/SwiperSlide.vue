@@ -15,7 +15,6 @@
 
 <script>
 
-import eventDispatch from '../util/eventDispatch.js'
 
 export default {
     name: 'SwiperSlide',
@@ -32,7 +31,8 @@ export default {
     },
     methods: {
         chooseDate(item) {
-            eventDispatch.chooseDate(item);
+            
+            this.$eventDispatch.chooseDate(item);
         }
     }
 }
@@ -57,7 +57,8 @@ export default {
         justify-content: center;
         border-radius: 50%;
         margin-bottom: 1.5rem;
-        overflow: hidden;
+       
+        position: relative;
     }
     
     .date-day {
@@ -98,8 +99,16 @@ export default {
     .is-today-is-not-choose .date-day{
         color: #0490F1;
     }
-    .is-not-today-is-choose {
+    .is-not-today-is-choose::after {       
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
         border-radius: 50%;
+        background: transparent;
+        border: 1px solid gray;
+        left: 0;
+        top: 0;
     }
     .is-not-today-is-not-choose {
 

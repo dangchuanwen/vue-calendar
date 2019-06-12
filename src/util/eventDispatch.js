@@ -48,11 +48,42 @@ function dealData(datas) {
     return datas;
 }
 
+/** 将 $eventDispatch 绑定到组件以及子组件上
+ *  
+ */
+function bind(comp, obj) {
+
+  
+    if (typeof comp === 'object') {
+        comp.$eventDispatch = obj;
+    }
+
+    if ('$children' in comp && comp.$children.length > 0) {
+        
+        var children = comp.$children;
+      
+        children.forEach((e) => {
+            bind(e, obj);
+        });
+    }
+
+    if ('$slots' in comp && 'default' in comp.$slots) {
+        var all_slot = comp.$slots.default;
+        all_slot.forEach((e) => {
+            bind(e, obj);
+        });
+    }
+   
+}
+
 // 存储私有变量
 var choose_date = null;
 
 
 const eventDispatch = {
+    bind(comp) {
+        bind(comp, this);   
+    },
     initData() {
         var data = getIninData();
         data = dealData(data);
@@ -60,6 +91,8 @@ const eventDispatch = {
     },
     chooseDate(date) {
         choose_date.is_choose = false;
+        date.is_choose = true;
+        choose_date = date;
         
     }
 }
