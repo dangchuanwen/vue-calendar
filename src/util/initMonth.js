@@ -63,11 +63,13 @@ function getMonthDate(year, month, start = 1, end) {
 function getYearMonth(year, month) {
     
     var real_year = year;
-    var real_month = month % 12;
+    var real_month = month;
     if (month > 12) {
         real_year ++;
+        real_month = 1;
     } else if (month < 1) {
         real_year --;
+        real_month = 12;
     } else {
 
     }
@@ -89,7 +91,7 @@ function getMonthFirstDayWeek(year, month) {
 
 // 在此暴露
 var initMonthInfo = {
-    
+    getYearMonth: getYearMonth,
     // 获取一页的日期数据（包括上个月的几天和下个月的几天）
     getOnePageData(year, month) {
 

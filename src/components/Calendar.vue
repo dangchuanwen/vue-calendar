@@ -2,7 +2,7 @@
     <div class="calendar">
         <swiper :options="swiperOption" ref="mySwiper" class="swiper" >
             <!-- slides -->
-            <swiper-slide v-for="item in dateData" :key="item.id">
+            <swiper-slide v-for="item in dateData" :key="item.id" >
                 <swiper-slide-one :pageData="item"></swiper-slide-one>
             </swiper-slide>
             
@@ -31,39 +31,24 @@ export default {
         
     },
     updated() {
-        if (!this.ifInit) {
-            this.ifInit = true;
+        if (!eventDispatch.getIfSwiperInit()) {
+            eventDispatch.setIfSwiperInit(true);
+            // 初次绑定事件中心
             eventDispatch.bind(this);
             // 将本月的页面置于中间位置
             this.swiper.slideTo(2, 0);
         } else {
+            this.swiper.slideTo(2, 0);
             
         }
         
     },
     methods: {
-        adjustSwiper() {
-            var dateData = this.dateData;
-            var activeIndex = this.swiper.activeIndex;
-            if (activeIndex < 2) {
-                for (let i = activeIndex; i < 2; i ++) {
-                    dateData.unshift(
-                        dateData.pop()
-                    );
-                }
-            } else if (activeIndex > 2) {
-                for (let i = activeIndex; i > 2; i --) {
-                    dateData.push(dateData.shift());
-                }
-            }
-            this.swiper.slideTo(2, 0);
-        }
+        
     },
     data() {
         var that = this;
         return {
-            timer: null,
-            ifInit: false,
             swiper: null,
             dateData: [],
             swiperOption: {
@@ -73,12 +58,7 @@ export default {
                     },
                     transitionEnd() {
                         // 结束滑动
-                        // 防抖
-                        clearTimeout(that.timer);
-                        that.timer = setTimeout(() => {
-                            // 调整页面
-                            that.adjustSwiper();
-                        }, 300);
+                        eventDispatch.endSwiper(that, this);
                         
                     }
                 }
